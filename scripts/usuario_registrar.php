@@ -1,8 +1,8 @@
 <?php
 include('conexion.php');
 
-$nombre = $_POST["nombre"] ?? '';
-$correo = $_POST["email"] ?? '';
+$nombre = trim($_POST["nombre"] ?? '');
+$correo = trim($_POST["email"] ?? '');
 $pass_raw = $_POST["contraseña"] ?? '';
 
 if(empty($nombre) || empty($correo) || empty($pass_raw)){
@@ -10,17 +10,22 @@ if(empty($nombre) || empty($correo) || empty($pass_raw)){
     exit();
 }
 
-// Criptografía moderna: hashing seguro con BCRYPT y salt automático
+// MASVS-CRYPTO: Hashing con BCRYPT
 $pass = password_hash($pass_raw, PASSWORD_BCRYPT);
 
-$insertarusu = mysqli_query($conn,"INSERT INTO users(name_u,email_u,password_u) VALUES ('$nombre','$correo','$pass')");
+// MASVS-CODE: Consulta preparada
+$stmt = mysqli_prepare($conn, "INSERT INTO users(name_u, email_u, password_u) VALUES (?, ?, ?)");
+mysqli_stmt_bind_param($stmt, "sss", $nombre, $correo, $pass);
+$resultado = mysqli_stmt_execute($stmt);
+mysqli_stmt_close($stmt);
 
-if(!$insertarusu)
+if(!$resultado)
 {
-    echo "<script> alert('Correo duplicado, intenta con otro correo');window.location='../PAGINAS/PaginaWebRegistrarse.html'; </script>";
+    echo "<script> alert('Correo duplicado o error al registrar');window.location='../PAGINAS/PaginaWebRegistrarse.html'; </script>";
 }
 else
 {
-    echo "<script> alert('Usuario registrado con exito: $nombre'); window.location='../PAGINAS/PaginaWebIniciarSesion.html' </script>";
+    $nombreSeguro = htmlspecialchars($nombre, ENT_QUOTES, 'UTF-8');
+    echo "<script> alert('Usuario registrado con exito: $nombreSeguro'); window.location='../PAGINAS/PaginaWebIniciarSesion.html'; </script>";
 }
 ?>

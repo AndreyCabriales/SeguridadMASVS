@@ -3,18 +3,24 @@ require_once('auth_check.php');
 include("conexion.php");
 include("usuarios_tabla.php");
 
-$pagina = $_GET['pag'];
-$id = $_GET['id'];
+$pagina = intval($_GET['pag'] ?? 1);
+$id = intval($_GET['id'] ?? 0);
 
-$querybuscar = mysqli_query($conn, "SELECT * FROM users WHERE id_user = '$id'");
-while($mostrar = mysqli_fetch_array($querybuscar))
+$stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE id_user = ?");
+mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli_stmt_execute($stmt);
+$res = mysqli_stmt_get_result($stmt);
+
+$proid = $pronom = $proape = $proema = $protel = "";
+if($mostrar = mysqli_fetch_array($res))
 {  
-   $proid      = $mostrar['id_user'];
-   $pronom     = $mostrar['name_u'];
-   $proape     = $mostrar['lastname_u'];
-   $proema     = $mostrar['email_u'];
-   $protel     = $mostrar['phone_u'];
+   $proid  = htmlspecialchars($mostrar['id_user'], ENT_QUOTES, 'UTF-8');
+   $pronom = htmlspecialchars($mostrar['name_u'], ENT_QUOTES, 'UTF-8');
+   $proape = htmlspecialchars($mostrar['lastname_u'], ENT_QUOTES, 'UTF-8');
+   $proema = htmlspecialchars($mostrar['email_u'], ENT_QUOTES, 'UTF-8');
+   $protel = htmlspecialchars($mostrar['phone_u'], ENT_QUOTES, 'UTF-8');
 }
+mysqli_stmt_close($stmt);
 ?>
 <html>
 <body>
@@ -36,21 +42,15 @@ while($mostrar = mysqli_fetch_array($querybuscar))
 </tr>
 <tr>
 <td><b>Email: </b></td>
-<td><input class="CajaTexto" type="text" name="txtema" value="<?php echo $proema;?>" required ></td>
+<td><input class="CajaTexto" type="email" name="txtema" value="<?php echo $proema;?>" required ></td>
 </tr>
 <tr>
 <td><b>Tel: </b></td>
 <td><input class="CajaTexto" type="text" name="txttel" value="<?php echo $protel;?>" required ></td>
 </tr>
-
-
-
-</select>
-</td>
-</tr>
 <tr>
 <td colspan="2" >
-<?php echo "<a class='BotonesTeam' href=\"usuarios_tabla.php?pag=$pagina\">Cancelar</a>";?>&nbsp;
+<?php echo "<a class='BotonesTeam' href="usuarios_tabla.php?pag=$pagina">Cancelar</a>";?>&nbsp;
 <input class='BotonesTeam' type="submit" name="btnregistrar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este usuario?');">
 </td>
 </tr>
@@ -61,17 +61,19 @@ while($mostrar = mysqli_fetch_array($querybuscar))
 </html>
 
 <?php
-  
 if(isset($_POST['btnregistrar']))
 {   
-   $proid1     = $_POST['txtid'];
-   $pronom1    = $_POST['txtnom'];
-   $proape1    = $_POST['txtape'];
-   $proema1    = $_POST['txtema'];
-   $protel1    = $_POST['txttel'];
-    
-$querymodificar = mysqli_query($conn, "UPDATE users SET name_u='$pronom1',lastname_u='$proape1',email_u='$proema1',phone_u='$protel1' WHERE id_user = '$proid1'");
-echo "<script>window.location= 'usuarios_tabla.php?pag=$pagina' </script>";
-  
+    $proid1  = intval($_POST['txtid']);
+    $pronom1 = trim($_POST['txtnom']);
+    $proape1 = trim($_POST['txtape']);
+    $proema1 = trim($_POST['txtema']);
+    $protel1 = trim($_POST['txttel']);
+     
+    $stmtMod = mysqli_prepare($conn, "UPDATE users SET name_u=?, lastname_u=?, email_u=?, phone_u=? WHERE id_user = ?");
+    mysqli_stmt_bind_param($stmtMod, "ssssi", $pronom1, $proape1, $proema1, $protel1, $proid1);
+    mysqli_stmt_execute($stmtMod);
+    mysqli_stmt_close($stmtMod);
+
+    echo "<script>window.location= 'usuarios_tabla.php?pag=$pagina'; </script>";
 }
 ?>

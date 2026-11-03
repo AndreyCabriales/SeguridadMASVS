@@ -2,19 +2,24 @@
 require_once('auth_check.php');
 include("conexion.php");
 include("usuarios_tabla.php");
-$pagina = $_GET['pag'];
-$id = $_GET['id'];
+$pagina = intval($_GET['pag'] ?? 1);
+$id = intval($_GET['id'] ?? 0);
 
-$querybuscar = mysqli_query($conn, "SELECT * FROM users WHERE id_user = '$id'");
+$stmt = mysqli_prepare($conn, "SELECT id_user, name_u, lastname_u, email_u, phone_u FROM users WHERE id_user = ?");
+mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
 
-while($mostrar = mysqli_fetch_array($querybuscar))
+$proid = $pronom = $proape = $proema = $protel = "";
+if($mostrar = mysqli_fetch_array($resultado))
 {
-    $proid = $mostrar['id_user'];
-    $pronom = $mostrar['name_u'];
-    $proape = $mostrar['lastname_u'];
-    $proema = $mostrar['email_u'];
-        $protel = $mostrar['phone_u'];
+    $proid = htmlspecialchars($mostrar['id_user'], ENT_QUOTES, 'UTF-8');
+    $pronom = htmlspecialchars($mostrar['name_u'], ENT_QUOTES, 'UTF-8');
+    $proape = htmlspecialchars($mostrar['lastname_u'], ENT_QUOTES, 'UTF-8');
+    $proema = htmlspecialchars($mostrar['email_u'], ENT_QUOTES, 'UTF-8');
+    $protel = htmlspecialchars($mostrar['phone_u'], ENT_QUOTES, 'UTF-8');
 }
+mysqli_stmt_close($stmt);
 ?>
 
 <html>
@@ -33,7 +38,6 @@ while($mostrar = mysqli_fetch_array($querybuscar))
 </tr>
 <tr>
     <td><b>Apellido: </b></td>
-
     <td><?php echo $proape;?></td>
 </tr>
 <tr>
@@ -48,7 +52,7 @@ while($mostrar = mysqli_fetch_array($querybuscar))
 <tr>
 
 <td colspan="2">
-    <?php echo "<a class='BotonesTeam' href=\"usuarios_tabla.php?pag=$pagina\">Regresar</a>";?>
+    <?php echo "<a class='BotonesTeam' href="usuarios_tabla.php?pag=$pagina">Regresar</a>";?>
 </td>
 </tr>
 </table>
