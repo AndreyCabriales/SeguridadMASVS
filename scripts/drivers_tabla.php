@@ -108,8 +108,7 @@ $sqldri = mysqli_query($conn, "SELECT * FROM drivers ORDER BY id_driver ASC LIMI
            <th>Apellido</th>
            <th>Edad</th>
            <th>Email</th>
-           <th>Contraseña</th>
-           <th>Telefono</th>
+                      <th>Telefono</th>
            <th>Licencia</th>
            <th>Modificadores</th>
            </tr>
@@ -123,8 +122,7 @@ $sqldri = mysqli_query($conn, "SELECT * FROM drivers ORDER BY id_driver ASC LIMI
            echo "<td>".$mostrar['lastname_d']."</td>";
            echo "<td>".$mostrar['age']."</td>";
            echo "<td>".$mostrar['email_d']."</td>";
-           echo "<td>".$mostrar['password_d']."</td>";
-           echo "<td>".$mostrar['phone_d']."</td>";
+                      echo "<td>".$mostrar['phone_d']."</td>";
            echo "<td>".$mostrar['license']."</td>";
            echo "<td style='width:24%'>
            <a class='BotonesTeam1' href=\"drivers_ver.php?id=$mostrar[id_driver]&pag=$pagina\">&#x1F50D;</a>

@@ -107,8 +107,7 @@ $sqlusu = mysqli_query($conn, "SELECT * FROM users ORDER BY id_user ASC LIMIT " 
            <th>Nombre</th>
            <th>Apellido</th>
            <th>Email</th>
-           <th>Contraseña</th>
-           <th>Telefono</th>
+                      <th>Telefono</th>
            <th>Modificadores</th>
            </tr>
        <?php
@@ -120,8 +119,7 @@ $sqlusu = mysqli_query($conn, "SELECT * FROM users ORDER BY id_user ASC LIMIT " 
            echo "<td>".$mostrar['name_u']."</td>";
            echo "<td>".$mostrar['lastname_u']."</td>";
            echo "<td>".$mostrar['email_u']."</td>";
-           echo "<td>".$mostrar['password_u']."</td>";
-           echo "<td>".$mostrar['phone_u']."</td>";
+                      echo "<td>".$mostrar['phone_u']."</td>";
            echo "<td style='width:24%'>
            <a class='BotonesTeam1' href=\"usuarios_ver.php?id=$mostrar[id_user]&pag=$pagina\">&#x1F50D;</a>
            <a class='BotonesTeam2' href=\"usuarios_modificar.php?id=$mostrar[id_user]&pag=$pagina\">&#128397;</a>

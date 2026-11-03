@@ -13,8 +13,7 @@ while($mostrar = mysqli_fetch_array($querybuscar))
     $proape = $mostrar['lastname_d'];
     $proeda = $mostrar['age'];
     $proema = $mostrar['email_d'];
-    $procon = $mostrar['password_d'];
-    $protel = $mostrar['phone_d'];
+        $protel = $mostrar['phone_d'];
     $prolic = $mostrar['license'];
 }
 ?>
@@ -45,10 +44,6 @@ while($mostrar = mysqli_fetch_array($querybuscar))
 <tr>
     <td><b>Email: </b></td>
     <td><?php echo $proema;?></td>
-</tr>
-<tr>
-    <td><b>Contraseña: <b></td>
-    <td><?php echo $procon;?></td>
 </tr>
 <tr>
     <td><b>Telefono: <b></td>
