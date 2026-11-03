@@ -1,0 +1,31 @@
+body{
+    background-color: rgb(61, 15, 146);
+}
+
+h1{
+    color: white;
+    font-size: 30px;
+    font-family: sans-serif;
+}
+
+h2{
+    text-align: left;
+    color:rgb(248, 234, 30);
+    font-size: 20px; 
+}
+
+.main-content{
+    margin-top: 200px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+hr{
+    background-color: white;
+    height: 2px;
+}
+
+p{
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+}

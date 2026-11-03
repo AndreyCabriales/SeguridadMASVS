@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conductores</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="PaginaWebTaxis.html">
+    <style>
+       
+        header {
+            margin-bottom: 90px; 
+            
+        }
+
+        .title-container {
+            margin-top: 150px; 
+            margin-bottom: 70px; 
+            text-align: center; 
+            font-size:larger;
+            color:white;
+          
+        }
+
+        
+        .conductor-card {
+            border: 1px solid #ddd; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            overflow: hidden; 
+            display: flex; 
+            align-items: center; 
+        }
+
+        .conductor-img {
+            border-radius: 50%;
+            width: 120px; 
+            height: 120px; 
+            object-fit: cover; 
+            margin-right: 15px;
+        }
+
+        .card-body {
+            padding: 1rem; 
+        }
+
+        .card-title {
+            margin-bottom: 0.5rem; 
+            margin-top: 10px;
+        }
+
+        .card-text {
+            color: #666; 
+        }
+
+        .btn-profile {
+            margin-top: 1rem; 
+        }
+        body {
+          background-color: #2D1B45;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: #CF6754;">
+            <a class="navbar-brand" href="PaginaWeb.html">
+                <img src="../img/Logo.png" style="height:120px; width:90px;" id="img1" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="PaginaWeb.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="PaginaWebTaxis.html">Taxis</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opciones
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="PaginaWebPerfil.html">Perfil</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="PaginaWebNosotros.html">Sobre Nosotros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="PaginaWebFAQ´s.html">FAQ´s</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container my-5">
+        <!-- Título de Conductores -->
+        <div class="title-container">
+            <h1>Taxis</h1>
+            <p class="lead">Conductores</p>
+        </div>
+
+        <!-- Tarjetas de Conductores -->
+        <div class="row">
+            <!-- Tarjeta de Conductor 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="card conductor-card">
+                    <img src="../img/team1.png" class="conductor-img" alt="Conductor 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Conductor 1</h5>
+                        <p class="card-text"></p>
+                        <a href="perfil_conductor1.html" class="btn btn-primary btn-profile">Ver Perfil</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Tarjeta de Conductor 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="card conductor-card">
+                    <img src="../img/team2.png" class="conductor-img" alt="Conductor 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Conductor 2</h5>
+                        <p class="card-text"></p>
+                        <a href="perfil_conductor2.html" class="btn btn-primary btn-profile">Ver Perfil</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Tarjeta de Conductor 3 -->
+            <div class="col-md-4 mb-4">
+                <div class="card conductor-card">
+                    <img src="../img/team3.png" class="conductor-img" alt="Conductor 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Conductor 3</h5>
+                        <p class="card-text"></p>
+                        <a href="perfil_conductor3.html" class="btn btn-primary btn-profile">Ver Perfil</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Tarjeta de Conductor 4 -->
+            <div class="col-md-4 mb-4">
+                <div class="card conductor-card">
+                    <img src="../img/conductor4.jpg" class="conductor-img" alt="Conductor 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Conductor 4</h5>
+                        <p class="card-text"></p>
+                        <a href="perfil_conductor4.html" class="btn btn-primary btn-profile">Ver Perfil</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Tarjeta de Conductor 5 -->
+            <div class="col-md-4 mb-4">
+                <div class="card conductor-card">
+                    <img src="../img/conductor5.jpg" class="conductor-img" alt="Conductor 5">
+                    <div class="card-body">
+                        <h5 class="card-title">Conductor 5</h5>
+                        <p class="card-text"></p>
+                        <a href="perfil_conductor5.html" class="btn btn-primary btn-profile">Ver Perfil</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Tarjeta de Conductor 6 -->
+            <div class="col-md-4 mb-4">
+                <div class="card conductor-card">
+                    <img src="../img/conductor6.jpg" class="conductor-img" alt="Conductor 6">
+                    <div class="card-body">
+                        <h5 class="card-title">Conductor 6</h5>
+                        <p class="card-text"></p>
+                        <a href="perfil_conductor6.html" class="btn btn-primary btn-profile">Ver Perfil</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

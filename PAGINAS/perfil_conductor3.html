@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del Conductor 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="PaginaWebPerfilConductores.css">
+    <style>
+        body {
+            padding-top: 80px; 
+            background-color: rgb(28, 1, 78);
+        }
+        .profile-header {
+            text-align: center;
+            color:white;
+            margin-bottom: 30px;
+        }
+        .profile-img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        .profile-card {
+            margin: 100px auto;
+            max-width: 600px;
+        }
+        .btn-back {
+            margin-top: 30px;
+            
+        }
+        .btn-back, .btn-reserve {
+            margin-top: 10px;
+        }
+        .reserve-btn-container {
+            text-align: right; 
+            margin-bottom: 10px;
+        }
+    </style>
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: #CF6754;">
+            <a class="navbar-brand" href="PaginaWeb.html">
+                <img src="../img/Logo.png" style="height:120px; width:90px;" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="PaginaWeb.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="PaginaWebTaxis.html">Taxis</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opciones
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="PaginaWebPerfil.html">Perfil</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="PaginaWebNosotros.html">Sobre Nosotros</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="PaginaWebFAQ´s.html">FAQ´s</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container profile-card">
+        <div class="profile-header">
+            <img src="../img/team3.png" class="profile-img" alt="Conductor 3">
+            <h1>Ana Leal Flores</h1>
+            <p class="lead">Conductora profesional con 6 años de experiencia</p>
+            <p class="lead">Profesional en el servicio al cliente.</p>
+        </div>
+        <div class="text-center">
+            <a href="PaginaWebTaxis.html" class="btn btn-secondary btn-back">Volver</a>
+        </div>
+        <div class="container">
+            <div class="reserve-btn-container">
+                <a href="reservar_conductor3.html" class="btn btn-success">Reservar</a>
+            </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

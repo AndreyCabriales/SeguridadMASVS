@@ -1,0 +1,25 @@
+body{
+    background-color: #2D1B45;
+}
+
+#Contenido{
+    position:relative;
+    top: 100px;
+    left: 20px;
+}
+
+h2{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 50px;
+
+    color: white;
+}
+
+.contenido{
+    color: white; 
+}
+
+footer{
+    background-color: black;
+    height: 150px;   
+}

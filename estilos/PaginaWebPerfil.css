@@ -1,0 +1,30 @@
+body{
+    background-color: #2D1B45;
+}
+
+.list-group{
+    padding-right: 400px;
+    display: grid;
+    height: 400px;
+    font-size: 25px;
+}
+
+.main-content{
+    display: grid;
+    grid-template-columns: 2fr 5fr; 
+     margin-top: 200px;
+}
+
+.perfil{
+    margin-left: 100px;
+}
+
+#img{
+    height: 300px;
+    width: 300px;
+}
+
+#Foto{
+    position:relative;
+    left:100px;
+}
