@@ -1,0 +1,14 @@
+# MASVS-NETWORK: Protección de servidor web y cabeceras de red
+Options -Indexes
+
+# Prevenir acceso a archivos de configuración y base de datos
+<FilesMatch "\.(sql|log|ini|git.*)$">
+    Require all denied
+</FilesMatch>
+
+# Habilitar cabeceras de seguridad si mod_headers está activo
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

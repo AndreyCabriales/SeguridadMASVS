@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . '/security_headers.php');
 $host = 'localhost';
 $nom = 'root';
 $pass = '';
