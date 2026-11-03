@@ -55,10 +55,9 @@ if(isset($_POST['btnregistrar']))
     $proape  = $_POST['apellido'];
     $proema  = $_POST['email'];
     $procon = $_POST['contraseña'];
-    $protel  = $_POST['telefono'];
+    $pass_hash = password_hash($procon, PASSWORD_BCRYPT);
 
-    mysqli_query($conn, "INSERT INTO users(name_u,lastname_u,email_u,password_u,phone_u)
-    values ('$pronom','$proape','$proema',md5('$procon'),'$protel')");
+    mysqli_query($conn, "INSERT INTO users(name_u,lastname_u,email_u,password_u,phone_u) values ('$pronom','$proape','$proema','$pass_hash','$protel')");
     echo "<script>alert('Usuario registrado con exito:  $pronom'); window.location='usuarios_tabla.php' </script>";
 }
 ?>
