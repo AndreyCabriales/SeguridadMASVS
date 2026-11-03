@@ -1,6 +1,7 @@
 <?php
 require_once('auth_check.php');
 require_once('csrf_helper.php');
+require_once('privacy_helper.php');
 include('conexion.php');
 ?>
 <html>
@@ -124,7 +125,7 @@ $sqldri = mysqli_query($conn, "SELECT * FROM drivers ORDER BY id_driver ASC LIMI
            echo "<td>".$mostrar['lastname_d']."</td>";
            echo "<td>".$mostrar['age']."</td>";
            echo "<td>".$mostrar['email_d']."</td>";
-                      echo "<td>".$mostrar['phone_d']."</td>";
+                      echo "<td>".enmascarar_telefono($mostrar['phone_d'])."</td>";
            echo "<td>".$mostrar['license']."</td>";
            echo "<td style='width:24%'>
            <a class='BotonesTeam1' href=\"drivers_ver.php?id=$mostrar[id_driver]&pag=$pagina\">&#x1F50D;</a>

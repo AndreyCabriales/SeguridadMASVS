@@ -1,6 +1,7 @@
 <?php
 require_once('auth_check.php');
 require_once('csrf_helper.php');
+require_once('privacy_helper.php');
 include('conexion.php');
 ?>
 <html>
@@ -121,7 +122,7 @@ $sqlusu = mysqli_query($conn, "SELECT * FROM users ORDER BY id_user ASC LIMIT " 
            echo "<td>".$mostrar['name_u']."</td>";
            echo "<td>".$mostrar['lastname_u']."</td>";
            echo "<td>".$mostrar['email_u']."</td>";
-                      echo "<td>".$mostrar['phone_u']."</td>";
+                      echo "<td>".enmascarar_telefono($mostrar['phone_u'])."</td>";
            echo "<td style='width:24%'>
            <a class='BotonesTeam1' href=\"usuarios_ver.php?id=$mostrar[id_user]&pag=$pagina\">&#x1F50D;</a>
            <a class='BotonesTeam2' href=\"usuarios_modificar.php?id=$mostrar[id_user]&pag=$pagina\">&#128397;</a>

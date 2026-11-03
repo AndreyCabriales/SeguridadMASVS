@@ -10,6 +10,14 @@ if(empty($nombre) || empty($correo) || empty($pass_raw)){
     exit();
 }
 
+if (!isset($_POST['politica_privacidad'])) {
+    echo "<script> alert('Debe aceptar el Aviso de Privacidad para continuar');window.location='../PAGINAS/PaginaWebRegistrarse.html'; </script>";
+    exit();
+}
+    echo "<script> alert('Debe insertar todos los datos');window.location='../PAGINAS/PaginaWebRegistrarse.html'; </script>";
+    exit();
+}
+
 // MASVS-CRYPTO: Hashing con BCRYPT
 $pass = password_hash($pass_raw, PASSWORD_BCRYPT);
 
