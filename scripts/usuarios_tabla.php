@@ -1,5 +1,6 @@
 <?php
 require_once('auth_check.php');
+require_once('csrf_helper.php');
 include('conexion.php');
 ?>
 <html>
@@ -124,7 +125,7 @@ $sqlusu = mysqli_query($conn, "SELECT * FROM users ORDER BY id_user ASC LIMIT " 
            echo "<td style='width:24%'>
            <a class='BotonesTeam1' href=\"usuarios_ver.php?id=$mostrar[id_user]&pag=$pagina\">&#x1F50D;</a>
            <a class='BotonesTeam2' href=\"usuarios_modificar.php?id=$mostrar[id_user]&pag=$pagina\">&#128397;</a>
-           <a class='BotonesTeam3' href=\"usuarios_eliminar.php?id=$mostrar[id_user]&pag=$pagina\" onClick=\"return confirm('¿Estás seguro de eliminar el usuario $mostrar[name_u]?')\">&#10006;</a>
+           <a class='BotonesTeam3' href=\"usuarios_eliminar.php?csrf_token=" . obtener_csrf_token() . "&id=$mostrar[id_user]&pag=$pagina\" onClick=\"return confirm('¿Estás seguro de eliminar el usuario $mostrar[name_u]?')\">&#10006;</a>
            </td>"; 
           
        }

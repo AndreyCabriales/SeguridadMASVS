@@ -1,5 +1,6 @@
 <?php
 require_once('auth_check.php');
+require_once('csrf_helper.php');
 include('conexion.php');
 ?>
 <html>
@@ -128,7 +129,7 @@ $sqldri = mysqli_query($conn, "SELECT * FROM drivers ORDER BY id_driver ASC LIMI
            echo "<td style='width:24%'>
            <a class='BotonesTeam1' href=\"drivers_ver.php?id=$mostrar[id_driver]&pag=$pagina\">&#x1F50D;</a>
            <a class='BotonesTeam2' href=\"drivers_modificar.php?id=$mostrar[id_driver]&pag=$pagina\">&#128397;</a>
-           <a class='BotonesTeam3' href=\"drivers_eliminar.php?id=$mostrar[id_driver]&pag=$pagina\" onClick=\"return confirm('¿Estás seguro de eliminar el conductor $mostrar[name_d]?')\">&#10006;</a>
+           <a class='BotonesTeam3' href=\"drivers_eliminar.php?csrf_token=" . obtener_csrf_token() . "&id=$mostrar[id_driver]&pag=$pagina\" onClick=\"return confirm('¿Estás seguro de eliminar el conductor $mostrar[name_d]?')\">&#10006;</a>
            </td>"; 
           
        }
