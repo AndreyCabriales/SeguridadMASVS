@@ -1,4 +1,5 @@
 <?php
+require_once('auth_check.php');
 include("conexion.php");
 include("usuarios_tabla.php");
 

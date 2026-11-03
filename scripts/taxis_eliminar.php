@@ -1,4 +1,5 @@
 <?php
+require_once('auth_check.php');
 include("conexion.php");
 $usuarioingresado = $_SESSION['usuarioingresando'];
 $pagina = $_GET['pag'];
