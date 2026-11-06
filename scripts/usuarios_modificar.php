@@ -50,7 +50,7 @@ mysqli_stmt_close($stmt);
 </tr>
 <tr>
 <td colspan="2" >
-<?php echo "<a class='BotonesTeam' href="usuarios_tabla.php?pag=$pagina">Cancelar</a>";?>&nbsp;
+<?php echo "<a class='BotonesTeam' href=\"usuarios_tabla.php?pag=$pagina\">Cancelar</a>";?>&nbsp;
 <input class='BotonesTeam' type="submit" name="btnregistrar" value="Modificar" onClick="javascript: return confirm('¿Deseas modificar este usuario?');">
 </td>
 </tr>

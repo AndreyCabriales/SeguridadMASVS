@@ -1,5 +1,6 @@
 <?php
 require_once('auth_check.php');
+require_once('privacy_helper.php');
 include("conexion.php");
 include("usuarios_tabla.php");
 $pagina = intval($_GET['pag'] ?? 1);
@@ -17,7 +18,7 @@ if($mostrar = mysqli_fetch_array($resultado))
     $pronom = htmlspecialchars($mostrar['name_u'], ENT_QUOTES, 'UTF-8');
     $proape = htmlspecialchars($mostrar['lastname_u'], ENT_QUOTES, 'UTF-8');
     $proema = htmlspecialchars($mostrar['email_u'], ENT_QUOTES, 'UTF-8');
-    $protel = htmlspecialchars($mostrar['phone_u'], ENT_QUOTES, 'UTF-8');
+    $protel = htmlspecialchars(enmascarar_telefono($mostrar['phone_u']), ENT_QUOTES, 'UTF-8');
 }
 mysqli_stmt_close($stmt);
 ?>
@@ -52,7 +53,7 @@ mysqli_stmt_close($stmt);
 <tr>
 
 <td colspan="2">
-    <?php echo "<a class='BotonesTeam' href="usuarios_tabla.php?pag=$pagina">Regresar</a>";?>
+    <?php echo "<a class='BotonesTeam' href=\"usuarios_tabla.php?pag=$pagina\">Regresar</a>";?>
 </td>
 </tr>
 </table>
