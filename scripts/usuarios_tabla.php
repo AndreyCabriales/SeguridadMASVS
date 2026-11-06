@@ -1,4 +1,7 @@
 <?php
+require_once('auth_check.php');
+require_once('csrf_helper.php');
+require_once('privacy_helper.php');
 include('conexion.php');
 ?>
 <html>
@@ -16,14 +19,20 @@ if (isset($_GET['pag']))
    }
 if(isset($_POST['btnbuscar']))
 {
-$buscar = $_POST['txtbuscar'];
-
-$sqlusu = mysqli_query($conn, "SELECT * FROM users where name_u like '".$buscar."%'");
-
+    $buscar = trim($_POST['txtbuscar'] ?? '');
+    $like = $buscar . '%';
+    $stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE name_u LIKE ? ORDER BY id_user ASC");
+    mysqli_stmt_bind_param($stmt, "s", $like);
+    mysqli_stmt_execute($stmt);
+    $sqlusu = mysqli_stmt_get_result($stmt);
 }
 else
 {
-$sqlusu = mysqli_query($conn, "SELECT * FROM users ORDER BY id_user ASC LIMIT " . (($pagina - 1) * $filasmax)  . "," . $filasmax);
+    $offset = ($pagina - 1) * $filasmax;
+    $stmt = mysqli_prepare($conn, "SELECT * FROM users ORDER BY id_user ASC LIMIT ?, ?");
+    mysqli_stmt_bind_param($stmt, "ii", $offset, $filasmax);
+    mysqli_stmt_execute($stmt);
+    $sqlusu = mysqli_stmt_get_result($stmt);
 }
    $resultadoMaximo = mysqli_query($conn, "SELECT count(*) as num_users FROM users");
    $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_users'];
@@ -107,8 +116,7 @@ $sqlusu = mysqli_query($conn, "SELECT * FROM users ORDER BY id_user ASC LIMIT " 
            <th>Nombre</th>
            <th>Apellido</th>
            <th>Email</th>
-           <th>Contraseña</th>
-           <th>Telefono</th>
+                      <th>Telefono</th>
            <th>Modificadores</th>
            </tr>
        <?php
@@ -120,12 +128,11 @@ $sqlusu = mysqli_query($conn, "SELECT * FROM users ORDER BY id_user ASC LIMIT " 
            echo "<td>".$mostrar['name_u']."</td>";
            echo "<td>".$mostrar['lastname_u']."</td>";
            echo "<td>".$mostrar['email_u']."</td>";
-           echo "<td>".$mostrar['password_u']."</td>";
-           echo "<td>".$mostrar['phone_u']."</td>";
+                      echo "<td>".enmascarar_telefono($mostrar['phone_u'])."</td>";
            echo "<td style='width:24%'>
            <a class='BotonesTeam1' href=\"usuarios_ver.php?id=$mostrar[id_user]&pag=$pagina\">&#x1F50D;</a>
            <a class='BotonesTeam2' href=\"usuarios_modificar.php?id=$mostrar[id_user]&pag=$pagina\">&#128397;</a>
-           <a class='BotonesTeam3' href=\"usuarios_eliminar.php?id=$mostrar[id_user]&pag=$pagina\" onClick=\"return confirm('¿Estás seguro de eliminar el usuario $mostrar[name_u]?')\">&#10006;</a>
+           <a class='BotonesTeam3' href=\"usuarios_eliminar.php?csrf_token=" . obtener_csrf_token() . "&id=$mostrar[id_user]&pag=$pagina\" onClick=\"return confirm('¿Estás seguro de eliminar el usuario $mostrar[name_u]?')\">&#10006;</a>
            </td>"; 
           
        }

@@ -1,4 +1,6 @@
 <?php
+require_once('auth_check.php');
+require_once('csrf_helper.php');
 include('conexion.php');
 ?>
 <html>
@@ -14,16 +16,19 @@ if (isset($_GET['pag']))
    {
        $pagina = 1;
    }
-if(isset($_POST['btnbuscar']))
-{
-$buscar = $_POST['txtbuscar'];
-
-$sqlusu = mysqli_query($conn, "SELECT * FROM taxis where number_t like '".$buscar."%'");
-
-}
-else
-{
-$sqlusu = mysqli_query($conn, "SELECT * FROM taxis ORDER BY id_taxi ASC LIMIT " . (($pagina - 1) * $filasmax)  . "," . $filasmax);
+if(isset($_POST['btnbuscar'])) {
+    $like = trim($_POST['txtbuscar'] ?? '') . '%';
+    $stmt = mysqli_prepare($conn, "SELECT * FROM taxis WHERE number_t LIKE ? ORDER BY id_taxi ASC");
+    mysqli_stmt_bind_param($stmt, "s", $like);
+    mysqli_stmt_execute($stmt);
+    $sqlusu = mysqli_stmt_get_result($stmt);
+} else {
+    $pagina = max(1, (int)$pagina);
+    $offset = ($pagina - 1) * $filasmax;
+    $stmt = mysqli_prepare($conn, "SELECT * FROM taxis ORDER BY id_taxi ASC LIMIT ?, ?");
+    mysqli_stmt_bind_param($stmt, "ii", $offset, $filasmax);
+    mysqli_stmt_execute($stmt);
+    $sqlusu = mysqli_stmt_get_result($stmt);
 }
    $resultadoMaximo = mysqli_query($conn, "SELECT count(*) as num_taxis FROM taxis");
    $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_taxis'];
@@ -123,7 +128,7 @@ $sqlusu = mysqli_query($conn, "SELECT * FROM taxis ORDER BY id_taxi ASC LIMIT " 
            echo "<td style='width:24%'>
            <a class='BotonesTeam1' href=\"taxis_ver.php?id=$mostrar[id_taxi]&pag=$pagina\">&#x1F50D;</a>
            <a class='BotonesTeam2' href=\"taxis_modificar.php?id=$mostrar[id_taxi]&pag=$pagina\">&#128397;</a>
-           <a class='BotonesTeam3' href=\"taxis_eliminar.php?id=$mostrar[id_taxi]&pag=$pagina\" onClick=\"return confirm('¿Estás seguro de eliminar el taxi $mostrar[number_t]?')\">&#10006;</a>
+           <a class='BotonesTeam3' href=\"taxis_eliminar.php?csrf_token=" . obtener_csrf_token() . "&id=$mostrar[id_taxi]&pag=$pagina\" onClick=\"return confirm('¿Estás seguro de eliminar el taxi $mostrar[number_t]?')\">&#10006;</a>
            </td>"; 
           
        }

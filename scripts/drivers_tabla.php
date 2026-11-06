@@ -1,4 +1,7 @@
 <?php
+require_once('auth_check.php');
+require_once('csrf_helper.php');
+require_once('privacy_helper.php');
 include('conexion.php');
 ?>
 <html>
@@ -14,16 +17,19 @@ if (isset($_GET['pag']))
    {
        $pagina = 1;
    }
-if(isset($_POST['btnbuscar']))
-{
-$buscar = $_POST['txtbuscar'];
-
-$sqldri = mysqli_query($conn, "SELECT * FROM drivers where name_d like '".$buscar."%'");
-
-}
-else
-{
-$sqldri = mysqli_query($conn, "SELECT * FROM drivers ORDER BY id_driver ASC LIMIT " . (($pagina - 1) * $filasmax)  . "," . $filasmax);
+if(isset($_POST['btnbuscar'])) {
+    $like = trim($_POST['txtbuscar'] ?? '') . '%';
+    $stmt = mysqli_prepare($conn, "SELECT * FROM drivers WHERE name_d LIKE ? ORDER BY id_driver ASC");
+    mysqli_stmt_bind_param($stmt, "s", $like);
+    mysqli_stmt_execute($stmt);
+    $sqldri = mysqli_stmt_get_result($stmt);
+} else {
+    $pagina = max(1, (int)$pagina);
+    $offset = ($pagina - 1) * $filasmax;
+    $stmt = mysqli_prepare($conn, "SELECT * FROM drivers ORDER BY id_driver ASC LIMIT ?, ?");
+    mysqli_stmt_bind_param($stmt, "ii", $offset, $filasmax);
+    mysqli_stmt_execute($stmt);
+    $sqldri = mysqli_stmt_get_result($stmt);
 }
    $resultadoMaximo = mysqli_query($conn, "SELECT count(*) as num_drivers FROM drivers");
    $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_drivers'];
@@ -108,8 +114,7 @@ $sqldri = mysqli_query($conn, "SELECT * FROM drivers ORDER BY id_driver ASC LIMI
            <th>Apellido</th>
            <th>Edad</th>
            <th>Email</th>
-           <th>Contraseña</th>
-           <th>Telefono</th>
+                      <th>Telefono</th>
            <th>Licencia</th>
            <th>Modificadores</th>
            </tr>
@@ -123,13 +128,12 @@ $sqldri = mysqli_query($conn, "SELECT * FROM drivers ORDER BY id_driver ASC LIMI
            echo "<td>".$mostrar['lastname_d']."</td>";
            echo "<td>".$mostrar['age']."</td>";
            echo "<td>".$mostrar['email_d']."</td>";
-           echo "<td>".$mostrar['password_d']."</td>";
-           echo "<td>".$mostrar['phone_d']."</td>";
+                      echo "<td>".enmascarar_telefono($mostrar['phone_d'])."</td>";
            echo "<td>".$mostrar['license']."</td>";
            echo "<td style='width:24%'>
            <a class='BotonesTeam1' href=\"drivers_ver.php?id=$mostrar[id_driver]&pag=$pagina\">&#x1F50D;</a>
            <a class='BotonesTeam2' href=\"drivers_modificar.php?id=$mostrar[id_driver]&pag=$pagina\">&#128397;</a>
-           <a class='BotonesTeam3' href=\"drivers_eliminar.php?id=$mostrar[id_driver]&pag=$pagina\" onClick=\"return confirm('¿Estás seguro de eliminar el conductor $mostrar[name_d]?')\">&#10006;</a>
+           <a class='BotonesTeam3' href=\"drivers_eliminar.php?csrf_token=" . obtener_csrf_token() . "&id=$mostrar[id_driver]&pag=$pagina\" onClick=\"return confirm('¿Estás seguro de eliminar el conductor $mostrar[name_d]?')\">&#10006;</a>
            </td>"; 
           
        }

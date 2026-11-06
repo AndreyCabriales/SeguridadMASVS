@@ -13,6 +13,7 @@
 <body>
         <form  method="POST" action="../scripts/usuario_login.php" id="formLogin">
         <h2 for="Titulo">Iniciar Sesion</h2>
+        <div id="alertaAuth" class="alert alert-warning py-2" style="display:none; font-size:0.9rem;"><strong>Acceso restringido (MASVS-AUTH):</strong> Inicia sesion para acceder a los paneles administrativos.</div>
         <hr>
         <label for="email">Email</label>
         <div class="form-floating mb-3">
@@ -33,4 +34,5 @@
         </div>
 </body>
 <script src="../js/PaginaWebRegistrarse.js"></script>
+<script>if(window.location.search.indexOf('auth=required')!==-1){var a=document.getElementById('alertaAuth');if(a)a.style.display='block';}</script>
 </html>

@@ -1,21 +1,36 @@
 <?php
 include('conexion.php');
 
-$nombre = $_POST["nombre"];
-$correo = $_POST["email"];
-$pass   = md5($_POST["contraseña"]);
+$nombre = trim($_POST["nombre"] ?? '');
+$correo = trim($_POST["email"] ?? '');
+$pass_raw = $_POST["contraseña"] ?? '';
 
-$insertarusu = mysqli_query($conn,"INSERT INTO users(name_u,email_u,password_u) VALUES ('$nombre','$correo','$pass')");
-
-if(!$insertarusu)
-{
-    echo "<script> alert('Correo duplicado, intenta con otro correo');window.location='../PAGINAS/PaginaWebRegistrarse.html'; </script>";
-}else if($nombre=="" || $correo=="" || $pass==""){
+if(empty($nombre) || empty($correo) || empty($pass_raw)){
     echo "<script> alert('Debe insertar todos los datos');window.location='../PAGINAS/PaginaWebRegistrarse.html'; </script>";
+    exit();
+}
+
+if (!isset($_POST['politica_privacidad'])) {
+    echo "<script> alert('Debe aceptar el Aviso de Privacidad para continuar');window.location='../PAGINAS/PaginaWebRegistrarse.html'; </script>";
+    exit();
+}
+
+// MASVS-CRYPTO: Hashing con BCRYPT
+$pass = password_hash($pass_raw, PASSWORD_BCRYPT);
+
+// MASVS-CODE: Consulta preparada
+$stmt = mysqli_prepare($conn, "INSERT INTO users(name_u, email_u, password_u) VALUES (?, ?, ?)");
+mysqli_stmt_bind_param($stmt, "sss", $nombre, $correo, $pass);
+$resultado = mysqli_stmt_execute($stmt);
+mysqli_stmt_close($stmt);
+
+if(!$resultado)
+{
+    echo "<script> alert('Correo duplicado o error al registrar');window.location='../PAGINAS/PaginaWebRegistrarse.html'; </script>";
 }
 else
 {
-    echo "<script> alert('Usuario registrado con exito: $nombre'); window.location='../PAGINAS/PaginaWebIniciarSesion.html' </script>";
+    $nombreSeguro = htmlspecialchars($nombre, ENT_QUOTES, 'UTF-8');
+    echo "<script> alert('Usuario registrado con exito: $nombreSeguro'); window.location='../PAGINAS/PaginaWebIniciarSesion.html'; </script>";
 }
-
 ?>

@@ -1,4 +1,5 @@
 <?php
+require_once('auth_check.php');
 include("conexion.php");
 include("drivers_tabla.php");
 $pagina = $_GET['pag'];
@@ -64,11 +65,11 @@ if(isset($_POST['btnregistrar']))
     $proeda  = $_POST['edad'];
     $proema  = $_POST['email'];
     $procon  = $_POST['contraseña'];
+    $pass_hash = password_hash($procon, PASSWORD_BCRYPT);
     $protel  = $_POST['telefono'];
     $prolic  = $_POST['licencia'];
 
-    mysqli_query($conn, "INSERT INTO drivers(name_d,lastname_d,age,email_d,password_d,phone_d,license)
-    values ('$pronom','$proape','$proeda','$proema','$procon','$protel','$prolic')");
+    mysqli_query($conn, "INSERT INTO drivers(name_d,lastname_d,age,email_d,password_d,phone_d,license) values ('$pronom','$proape','$proeda','$proema','$pass_hash','$protel','$prolic')");
     echo "<script>alert('Conductor registrado con exito:  $pronom'); window.location='drivers_tabla.php' </script>";
 }
 ?>
