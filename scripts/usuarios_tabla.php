@@ -19,14 +19,20 @@ if (isset($_GET['pag']))
    }
 if(isset($_POST['btnbuscar']))
 {
-$buscar = $_POST['txtbuscar'];
-
-$sqlusu = mysqli_query($conn, "SELECT * FROM users where name_u like '".$buscar."%'");
-
+    $buscar = trim($_POST['txtbuscar'] ?? '');
+    $like = $buscar . '%';
+    $stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE name_u LIKE ? ORDER BY id_user ASC");
+    mysqli_stmt_bind_param($stmt, "s", $like);
+    mysqli_stmt_execute($stmt);
+    $sqlusu = mysqli_stmt_get_result($stmt);
 }
 else
 {
-$sqlusu = mysqli_query($conn, "SELECT * FROM users ORDER BY id_user ASC LIMIT " . (($pagina - 1) * $filasmax)  . "," . $filasmax);
+    $offset = ($pagina - 1) * $filasmax;
+    $stmt = mysqli_prepare($conn, "SELECT * FROM users ORDER BY id_user ASC LIMIT ?, ?");
+    mysqli_stmt_bind_param($stmt, "ii", $offset, $filasmax);
+    mysqli_stmt_execute($stmt);
+    $sqlusu = mysqli_stmt_get_result($stmt);
 }
    $resultadoMaximo = mysqli_query($conn, "SELECT count(*) as num_users FROM users");
    $maxusutabla = mysqli_fetch_assoc($resultadoMaximo)['num_users'];
